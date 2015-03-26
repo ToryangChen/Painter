@@ -3,6 +3,7 @@ package com.nmid.painterdemo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,9 +14,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by Toryang on 2015/3/25.
@@ -25,6 +28,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     TextView registerView;
     EditText userName,passward;
     String s;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         if((userName.getText().toString()).equals("") || (passward.getText().toString()).equals("")){
             Toast.makeText(LoginActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         }
-        else if(getUser(userName.getText().toString(), passward.getText().toString())){
+        if(getUser(userName.getText().toString(),passward.getText().toString())){
             //IPAddress.StaffNo = userName.getText().toString();
             //s = userName.getText().toString();
             Intent intent = new Intent();
@@ -80,36 +84,15 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
     }
 
     public boolean getUser(String str1, String str2){
-        boolean b = false;
-        String ss =IPAddress.IP+"Login?username="+str1+"&password="+str2;
-        URL url = null;
-        HttpURLConnection connection = null;
-        try{
-            url = new URL(ss);
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-        try{
-            connection = (HttpURLConnection)url.openConnection();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        InputStream is = null;
 
-        try{
-            is = connection.getInputStream();
-            BufferedReader in  = new BufferedReader(new InputStreamReader(is));
-            String line;
-            while ((line = in.readLine()) != null){
-                if(line.equals("true")){
-                    b = true;
-                }
+      final String params = "username"+str1+"&password"+str2;
+        final String[] result = new String[1];
+        new Thread(){
+            public void run(){
+                result[0] = PostUtil.sendPost(IPAddress.IP,params);
             }
-            is.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-        connection.disconnect();
-        return b;
+        }.start();
+        return (result[0] != "");
+
     }
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/acticity_paint">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/paintView"/>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/invisibleButton"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:id="@+id/button">
+            <Button
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/pen_button"
+                android:text="笔"/>
+            <Button
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/eraser_button"
+                android:text="橡皮"/>
+            <Spinner
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/color"
+                android:entries="@array/color"
+                android:prompt="@string/spin_prompt"/>
+            <Button
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/clearButton"
+                android:text="@string/clear_button"/>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+</LinearLayout>

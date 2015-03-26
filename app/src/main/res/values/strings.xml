@@ -4,5 +4,21 @@
     <string name="app_name">PainterDemo</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="message">消息</string>
+    <string name="action_about">关于</string>
+    <string name="guessButton">我猜</string>
+    <string name="paintButton">我画</string>
+
+    <string name="clear_button">清除</string>
+    <string name="action_save">保存</string>
+    <string name="spin_prompt">颜色</string>
+    <string-array name="color">
+        <item>黑</item>
+        <item>红</item>
+        <item>黄</item>
+        <item>蓝</item>
+        <item>绿</item>
+
+    </string-array>
 
 </resources>

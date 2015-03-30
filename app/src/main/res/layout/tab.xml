@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tabbar"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:paddingTop="10dp"
+    android:orientation="horizontal"
+    android:gravity="top">
+    <LinearLayout
+        android:id="@+id/myguess"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="我猜"/>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:src="@drawable/border"
+            android:background="#00000000"
+            android:clickable="false"
+            android:id="@+id/button_guess"/>
+        </LinearLayout>
+    <LinearLayout
+        android:id="@+id/mypaint"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="我画"/>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:src="@drawable/border_null"
+            android:background="#00000000"
+            android:clickable="false"
+            android:id="@+id/button_paint"/>
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

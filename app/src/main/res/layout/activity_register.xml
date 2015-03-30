@@ -2,50 +2,47 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#eef2f5"
     android:orientation="vertical">
+
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="用户名"/>
+        android:layout_marginTop="30dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical">
+
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/ruseredit"
+            android:paddingLeft="30dp"
+            android:hint="用户名"
             android:id="@+id/register_username"/>
-        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="密码"/>
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/rpassedit"
+            android:paddingLeft="30dp"
+            android:hint="密码"
             android:id="@+id/register_password"/>
-        </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="重复密码"/>
+
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/rgpassedit"
+            android:paddingLeft="30dp"
+            android:hint="重复密码"
             android:id="@+id/register_pwagain"/>
     </LinearLayout>
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="注册"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/reg_selector"
         android:id="@+id/register_button"/>
 
 

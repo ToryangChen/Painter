@@ -2,45 +2,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginbackground"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="用户名"/>
+        android:paddingBottom="15dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_marginTop="315dp">
+
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/user_name"
-            android:hint="username"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="密码"/>
+            android:background="@drawable/useredit"
+            android:paddingLeft="70dp"
+            android:hint="用户名"/>
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/passedit"
             android:id="@+id/passward"
-            android:hint="*******"/>
+            android:hint="密码"
+            android:paddingLeft="70dp"/>
     </LinearLayout>
-    <Button
+
+
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
         android:id="@+id/login_button"
-        android:text="登录"/>
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/log_selector"/>
+
     <TextView
         android:id="@+id/register_view"
+        android:paddingTop="25dp"
+        android:paddingLeft="270dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="注册"/>
+        android:text="注册账号"/>
+
+
 
 </LinearLayout>

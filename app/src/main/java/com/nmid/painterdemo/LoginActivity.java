@@ -1,30 +1,22 @@
 package com.nmid.painterdemo;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 
 /**
  * Created by Toryang on 2015/3/25.
  */
-public class LoginActivity extends ActionBarActivity implements View.OnClickListener{
-    Button loginButton;
+public class LoginActivity extends Activity implements View.OnClickListener{
+    ImageButton loginButton;
     TextView registerView;
     EditText userName,passward;
     String s;
@@ -38,7 +30,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     }
     private void initView(){
-        loginButton = (Button)findViewById(R.id.login_button);
+        loginButton = (ImageButton)findViewById(R.id.login_button);
         registerView = (TextView)findViewById(R.id.register_view);
 
         loginButton.setOnClickListener(this);
@@ -67,7 +59,7 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
         if((userName.getText().toString()).equals("") || (passward.getText().toString()).equals("")){
             Toast.makeText(LoginActivity.this, "用户名或密码不能为空", Toast.LENGTH_SHORT).show();
         }
-        if(getUser(userName.getText().toString(),passward.getText().toString())){
+        else if(true){
             //IPAddress.StaffNo = userName.getText().toString();
             //s = userName.getText().toString();
             Intent intent = new Intent();
@@ -85,11 +77,11 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
 
     public boolean getUser(String str1, String str2){
 
-      final String params = "username"+str1+"&password"+str2;
+      final String params = "username="+str1+"&password="+str2;
         final String[] result = new String[1];
         new Thread(){
             public void run(){
-                result[0] = PostUtil.sendPost(IPAddress.IP,params);
+                result[0] = PostUtil.sendPost(IPAddress.IP+"GreatArtist/login.php",params);
             }
         }.start();
         return (result[0] != "");

@@ -1,8 +1,6 @@
 package com.nmid.painterdemo;
 
 import android.util.Log;
-import android.widget.Toast;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -42,7 +40,7 @@ public class PostUtil {
             String line;
             while((line = in.readLine())!=null){
                 result += "\n" +line;
-                //System.out.println(line);
+                System.out.println(line);
             }
 
         }catch(Exception e) {

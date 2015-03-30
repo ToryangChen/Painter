@@ -1,7 +1,10 @@
 package com.nmid.painterdemo;
 
+
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,9 @@ public class RegisterActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("注册");
         initView();
 
     }
@@ -48,7 +54,6 @@ public class RegisterActivity extends ActionBarActivity {
        @Override
        public void onClick(View v) {
           register();
-
        }
    }
 
@@ -56,9 +61,18 @@ public class RegisterActivity extends ActionBarActivity {
         final String params = "username="+str1+"&password="+str2;
         new Thread(){
             public void run(){
-                String result = PostUtil.sendPost(IPAddress.IP,params);
+                String result = PostUtil.sendPost(IPAddress.IP+"GreatArtist/reg.php",params);
             }
         }.start();
        }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

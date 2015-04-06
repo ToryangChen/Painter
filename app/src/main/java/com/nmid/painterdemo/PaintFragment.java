@@ -168,7 +168,8 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         try{
             String path = createPath();
 
-            File file = new File(path,System.currentTimeMillis()+".jpg");
+            String fileName = System.currentTimeMillis()+".jpg";
+            File file = new File(path,fileName);
             OutputStream stream = new FileOutputStream(file);
             baseBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream);
             stream.close();
@@ -180,6 +181,7 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
 
             Toast.makeText(getActivity(), "保存图片成功", Toast.LENGTH_SHORT).show();
             //finish();
+            new Upload(fileName).start();
 
         } catch (FileNotFoundException e) {
             Toast.makeText(getActivity(),"保存图片失败",Toast.LENGTH_SHORT).show();

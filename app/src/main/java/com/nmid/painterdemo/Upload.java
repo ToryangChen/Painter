@@ -1,6 +1,7 @@
 package com.nmid.painterdemo;
 
 import android.os.Environment;
+import android.os.StrictMode;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -22,12 +23,13 @@ public class Upload extends Thread{
         File sdCardDir = Environment.getExternalStorageDirectory();
         String path = sdCardDir.getPath()+"/大画师";
         String uploadFile =path+"/"+fileName;
-        String postUrl = "http://113.251.221.212/Test/loading.php";
+        String postUrl = "http://113.251.163.89/GreatArtist/uploading.php";
         String end = "\r\n";
-     //   String twoHyphens = "--";
+        String twoHyphens = "--";
         String boundary = "*****";
         try
         {
+
             URL url = new URL(postUrl);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
           /* Output to the connection. Default is false,
@@ -43,9 +45,11 @@ public class Upload extends Thread{
             con.setRequestProperty("Connection", "Keep-Alive");
             con.setRequestProperty("Charset", "UTF-8");
             con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+          /*设置StrictMode 否则HTTPURLConnection连接失败，因为这是在主进程中进行网络连接*/
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
           /* 设置DataOutputStream，getOutputStream中默认调用connect()*/
             DataOutputStream ds = new DataOutputStream(con.getOutputStream());  //output to the connection
-            //   ds.writeBytes(twoHyphens + boundary + end);
+            ds.writeBytes(twoHyphens + boundary + end);
             ds.writeBytes("Content-Disposition: form-data; " +
                     "name=\"file\";filename=\"" +
                     fileName + "\"" + end);
@@ -63,7 +67,7 @@ public class Upload extends Thread{
                 ds.write(buffer, 0, length);
             }
             ds.writeBytes(end);
-            //      ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
+            ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
           /* 关闭流，写入的东西自动生成Http正文*/
             fStream.close();
           /* 关闭DataOutputStream */
@@ -77,9 +81,7 @@ public class Upload extends Thread{
                 b.append((char) ch);
             }
           /* 显示网页响应内容 */
-    //        Toast.makeText(MainActivity.this, b.toString().trim(), Toast.LENGTH_SHORT).show();//Post成功
-
-
+      //      Toast.makeText(MainActivity.this, b.toString().trim(), Toast.LENGTH_SHORT).show();//Post成功
         } catch (Exception e)
         {
             /* 显示异常信息 */

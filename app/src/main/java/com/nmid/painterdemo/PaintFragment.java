@@ -178,10 +178,9 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
             intent.setAction(Intent.ACTION_MEDIA_MOUNTED);
             intent.setData(Uri.fromFile(Environment.getExternalStorageDirectory()));
             //sendBroadcast(intent);
-
-            Toast.makeText(getActivity(), "保存图片成功", Toast.LENGTH_SHORT).show();
-            //finish();
             new Upload(fileName).start();
+            Toast.makeText(getActivity(), "保存成功", Toast.LENGTH_SHORT).show();
+            //finish();
 
         } catch (FileNotFoundException e) {
             Toast.makeText(getActivity(),"保存图片失败",Toast.LENGTH_SHORT).show();

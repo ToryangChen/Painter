@@ -11,7 +11,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * Created by waxxl on 2015/4/7.
+ * Created by tornado on 2015/4/7.
  */
 public class Upload extends Thread{
     String fileName =null;
@@ -66,6 +66,9 @@ public class Upload extends Thread{
             /* 将资料写入DataOutputStream中 */
                 ds.write(buffer, 0, length);
             }
+            ds.writeBytes(end);
+            ds.writeBytes(twoHyphens + boundary + end);
+            ds.writeBytes("123" + end);
             ds.writeBytes(end);
             ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
           /* 关闭流，写入的东西自动生成Http正文*/

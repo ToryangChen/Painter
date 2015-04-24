@@ -123,9 +123,9 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(5);
         canvas.drawBitmap(baseBitmap,new Matrix(),paint);
-        this.imageView.setImageBitmap(baseBitmap);
+        imageView.setImageBitmap(baseBitmap);
 
-        this.imageView.setOnTouchListener(new View.OnTouchListener() {
+        imageView.setOnTouchListener(new View.OnTouchListener() {
             int startX;
             int startY;
 

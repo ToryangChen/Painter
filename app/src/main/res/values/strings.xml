@@ -21,4 +21,14 @@
 
     </string-array>
 
+
+    <string-array name="left_array">
+        <item >主页</item>
+        <item >应用管理</item>
+        <item >搜索</item>
+        <item >备份</item>
+        <item >设置</item>
+        <item >退出</item>
+    </string-array>
+
 </resources>

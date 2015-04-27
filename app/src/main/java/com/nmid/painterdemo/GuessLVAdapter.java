@@ -1,4 +1,6 @@
-package com.nmid.painterdemo.com.nmid;
+package com.nmid.painterdemo;
+
+
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -25,7 +27,7 @@ import java.util.zip.Inflater;
 
 public class GuessLVAdapter extends BaseAdapter {
     List<String> list = new ArrayList<>();
-   // Context context;
+    // Context context;
     LayoutInflater mInflater;
 
     public GuessLVAdapter(LayoutInflater mInflater) {
@@ -63,7 +65,7 @@ public class GuessLVAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
-   //     LayoutInflater mInflater = LayoutInflater.from(context);
+        //     LayoutInflater mInflater = LayoutInflater.from(context);
         if(convertView == null)
         {
             convertView = mInflater.inflate(R.layout.guess_item,null);

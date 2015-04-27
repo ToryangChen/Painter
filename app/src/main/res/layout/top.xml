@@ -3,22 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="45dp"
     android:background="@drawable/border"
-    android:gravity="center"
     android:orientation="horizontal">
 
     <Button
         android:id="@+id/slidebt"
-        android:layout_marginLeft="5dp"
-        android:layout_width="25dp"
-        android:layout_height="20dp"
+        android:layout_margin="5dp"
+        android:layout_width="40dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center"
         android:background="@drawable/slidebt"
         />
     <TextView
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginLeft="100dp"
         android:text="大画师"
-        android:gravity="center"
+        android:layout_gravity="center"
         android:textColor="#ffffff"
         android:textSize="20sp"
         android:textStyle="bold"/>

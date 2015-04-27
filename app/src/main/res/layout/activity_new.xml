@@ -16,4 +16,5 @@
             <include layout="@layout/activity_main"/>
             </LinearLayout>
         </com.nmid.painterdemo.com.nmid.view.SildeMenu>
+
 </RelativeLayout>

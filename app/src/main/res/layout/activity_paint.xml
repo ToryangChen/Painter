@@ -37,7 +37,6 @@
                 android:layout_width="90dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/color"
-                android:entries="@array/color"
                 android:prompt="@string/spin_prompt"/>
             <Button
                 android:layout_width="90dp"

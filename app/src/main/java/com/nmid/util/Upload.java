@@ -1,7 +1,9 @@
-package com.nmid.painterdemo;
+package com.nmid.util;
 
 import android.os.Environment;
 import android.os.StrictMode;
+
+import com.nmid.util.IPAddress;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -23,7 +25,7 @@ public class Upload extends Thread{
         File sdCardDir = Environment.getExternalStorageDirectory();
         String path = sdCardDir.getPath()+"/大画师";
         String uploadFile =path+"/"+fileName;
-        String postUrl = "http://113.251.163.89/GreatArtist/uploading.php";
+        String postUrl = IPAddress.IP+"//GreatArtist/uploading.php";
         String end = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";

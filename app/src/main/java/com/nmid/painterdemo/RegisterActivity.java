@@ -2,6 +2,8 @@ package com.nmid.painterdemo;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
@@ -10,16 +12,29 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.nmid.application.MyApplication;
+import com.nmid.util.HttpThread;
+import com.nmid.util.IPAddress;
+
 /**
  * Created by Toryang on 2015/3/25.
  */
 public class RegisterActivity extends ActionBarActivity {
     private EditText rUsername,rPassword,rgPassword;
     private Button registerbutton;
+    int flag;
+    private Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            flag = msg.arg1;
+            register(flag);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        MyApplication.getInstance().addActivity(RegisterActivity.this);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("注册");
@@ -35,36 +50,34 @@ public class RegisterActivity extends ActionBarActivity {
         registerbutton.setOnClickListener(new MyClickListener());
     }
 
-   private void register(){
+    private void register(int flag){
+        if(flag == 1){
+            Toast.makeText(this,"注册成功",Toast.LENGTH_SHORT).show();
+            finish();
+        }else{
+            Toast.makeText(this,"注册失败",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+   private void judgement(){
        if((rUsername.getText().toString()).equals("") || (rPassword.getText().toString()).equals("")
                || (rgPassword.getText().toString()).equals("")){
            Toast.makeText(this,"用户名或密码不能为空",Toast.LENGTH_SHORT).show();
        }
        else if(!(rPassword.getText().toString()).equals(rgPassword.getText().toString())){
            Toast.makeText(this,"密码不一致",Toast.LENGTH_SHORT).show();
-
        }
-       else{
-            sendData(rUsername.getText().toString(),rPassword.getText().toString());
-       }
-
    }
    public class MyClickListener implements View.OnClickListener{
 
        @Override
        public void onClick(View v) {
-          register();
+           judgement();
+          new HttpThread(IPAddress.IP+"GreatArtist/reg.php",rUsername.getText().toString(),
+                   rPassword.getText().toString(),handler);
        }
    }
 
-    private void sendData(String str1, String str2){
-        final String params = "username="+str1+"&password="+str2;
-        new Thread(){
-            public void run(){
-                String result = PostUtil.sendPost(IPAddress.IP+"GreatArtist/reg.php",params);
-            }
-        }.start();
-       }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

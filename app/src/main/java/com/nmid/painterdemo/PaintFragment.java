@@ -34,17 +34,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.nmid.util.Upload;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.zip.Inflater;
-
 
 /**
  * Created by Toryang on 2015/3/30.
@@ -114,6 +114,7 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         colorChoice.setVisibility(View.VISIBLE);
 
     }
+
 
     private class SpinnerXMLSelectedListener implements OnItemSelectedListener {
         @Override
@@ -253,7 +254,7 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    private void dialog2() {
+    private  void dialog2() {
 
         final EditText editText = new EditText(view.getContext());
         AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
@@ -284,29 +285,6 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         canvas.drawPaint(paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         initImage();
-
-    }
-    protected void dialog(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-        builder.setMessage("是否保存作品？");
-        builder.setTitle("提示");
-        builder.setCancelable(false);
-        builder.setPositiveButton("是", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog2();
-                System.exit(0);
-            }
-        });
-        builder.setNegativeButton("否", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                System.exit(0);
-            }
-        });
-
-        builder.create().show();
 
     }
 

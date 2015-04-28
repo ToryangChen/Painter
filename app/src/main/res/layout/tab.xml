@@ -23,7 +23,7 @@
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:src="@drawable/border"
+            android:src="@drawable/border_null"
             android:background="#00000000"
             android:clickable="false"
             android:id="@+id/button_guess"/>

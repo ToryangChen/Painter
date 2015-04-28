@@ -128,20 +128,17 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.slidebt:
-                try{
-                    if (!layout.isDrawerOpen(view)) {
-                        layout.openDrawer(view);
-                    }
-                }catch (NullPointerException e){
-                    System.out.println("错误原因：" +e);
+                if (!layout.isDrawerOpen(view)) {
+                    layout.openDrawer(view);
                 }
 
-                break;
+
         }
 
     }
     private void resetImgs() {
         mImgguess.setImageResource(R.drawable.border_null);
+        System.out.println("set-------------------");
         mImgpaint.setImageResource(R.drawable.border_null);
 
     }

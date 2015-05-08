@@ -7,7 +7,7 @@
 
     <include layout="@layout/top"/>
 
-    <include layout="@layout/tab"/>
+    <include layout="@layout/tab" />
 
 
     <FrameLayout

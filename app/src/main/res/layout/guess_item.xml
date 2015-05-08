@@ -15,17 +15,27 @@
             android:id="@+id/newview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/org"
+            android:layout_centerVertical="true"
             android:layout_alignParentTop="true" />
-      <!--  android:src="@drawable/org"-->
 
-        <ImageView
+
+    <!--    <ImageView
             android:id="@+id/newmsg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/newmessage"
             android:layout_alignLeft="@id/newview"
-            android:layout_alignTop="@id/newview"/>
+            android:layout_alignTop="@id/newview"/>-->
+        <ProgressBar
+            android:id="@+id/updating"
+            android:layout_width="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_height="100dip"
+            android:layout_alignParentTop="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
     <LinearLayout

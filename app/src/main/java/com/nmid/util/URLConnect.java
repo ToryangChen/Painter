@@ -2,6 +2,12 @@ package com.nmid.util;
 
 
 
+import android.app.Application;
+import android.os.Handler;
+
+import com.nmid.application.MyApplication;
+import com.nmid.painterdemo.GuessFragment;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,14 +23,17 @@ import java.util.Map;
  * Created by tornado on 2015/4/22.
  */
 public class URLConnect extends Thread{
+    Handler Ghandler;
+    public URLConnect(Handler handler){
+        Ghandler = handler;
+    }
     @Override
     public void run()  {
         String[] json =null ;
         List<String> list = new ArrayList<>();
         Map<String,String> map= new HashMap<>();
         try {
-          String answerURL = "http://113.251.161.44/GreatArtist/push.php";
-  //          String answerURL ="http://api.douban.com/v2/music/search?tag=1233";
+          String answerURL = IPAddress.IP+"GreatArtist/push.php";
             URL postURL = new URL(answerURL);
             HttpURLConnection connection = (HttpURLConnection) postURL.openConnection();
             connection.setDoInput(true);
@@ -64,7 +73,11 @@ public class URLConnect extends Thread{
             ListData.map = map;
             ListData.list = list;
         }
-     //   GuessFragment.guessLVAdapter.setUser(list);
+
+        if(MyApplication.getFlag()){
+            Ghandler.sendEmptyMessage(1);
+        }
+
         // {"answer":"pic1","url":"benbenla-04d.jpg"}
 
     }

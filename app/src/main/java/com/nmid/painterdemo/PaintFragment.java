@@ -33,11 +33,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.nmid.util.ListData;
 import com.nmid.util.Upload;
 
 import java.io.File;
@@ -46,6 +48,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import static com.nmid.painterdemo.R.drawable.spinner_blue;
+
 /**
  * Created by Toryang on 2015/3/30.
  */
@@ -53,13 +57,17 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
     private ImageView imageView;
     private Bitmap baseBitmap;
     private Canvas canvas;
-    private Paint paint;
-    private Button penButton,eraserButton,clearButton,invisibleButton;
+    private Paint paint = new Paint();
+    private Paint cpaint = new Paint();
+    private Paint epaint = new Paint();
+    private ImageButton penButton,eraserButton,clearButton,invisibleButton;
     private Spinner colorChoice;
     private ArrayAdapter adapter;
     private View view;
     private String name;
     Context context = null;
+    int color = Color.BLACK;
+    private boolean flag=false;
     final Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -90,10 +98,10 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         return view;
     }
     private void initView(){
-        penButton = (Button)view.findViewById(R.id.pen_button);
-        eraserButton = (Button)view.findViewById(R.id.eraser_button);
-        clearButton = (Button)view.findViewById(R.id.clearButton);
-        invisibleButton = (Button)view.findViewById(R.id.invisibleButton);
+        penButton = (ImageButton)view.findViewById(R.id.pen_button);
+        eraserButton = (ImageButton)view.findViewById(R.id.eraser_button);
+        clearButton = (ImageButton)view.findViewById(R.id.clearButton);
+        invisibleButton = (ImageButton)view.findViewById(R.id.invisibleButton);
 
         colorChoice = (Spinner)view.findViewById(R.id.color);
 
@@ -107,6 +115,8 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         invisibleButton.setOnClickListener(this);
 
         adapter = ArrayAdapter.createFromResource(view.getContext(),R.array.color,android.R.layout.simple_spinner_item);
+
+        //adapter = new ArrayAdapter<int>(view.getContext(),android.R.layout.simple_spinner_item,picId);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         colorChoice.setAdapter(adapter);
@@ -121,19 +131,49 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             switch (position){
                 case 0:
-                    paint.setColor(Color.BLACK);
+                    if (!flag){
+                        color = Color.BLACK;
+                        paint.setColor(color);
+                    }else{
+                        color = Color.BLACK;
+                    }
+                    colorChoice.setBackgroundResource(R.drawable.spinner_black);
                     break;
                 case 1:
-                    paint.setColor(Color.RED);
+                    if (!flag){
+                        color = Color.RED;
+                        paint.setColor(Color.RED);
+                    }else {
+                        color = Color.RED;
+                    }
+                    colorChoice.setBackgroundResource(R.drawable.spinner_red);
                     break;
                 case 2:
-                    paint.setColor(Color.YELLOW);
+                    if (!flag){
+                        color = Color.YELLOW;
+                        paint.setColor(Color.YELLOW);
+                    }else {
+                        color = Color.YELLOW;
+                    }
+                    colorChoice.setBackgroundResource(R.drawable.spinner_yellow);
                     break;
                 case 3:
-                    paint.setColor(Color.BLUE);
+                    if (!flag){
+                        color = Color.BLUE;
+                        paint.setColor(Color.BLUE);
+                    }else {
+                        color = Color.BLUE;
+                    }
+                    colorChoice.setBackgroundResource(R.drawable.spinner_blue);
                     break;
                 case 4:
-                    paint.setColor(Color.GREEN);
+                    if (!flag){
+                        color = Color.GREEN;
+                        paint.setColor(Color.GREEN);
+                    }else {
+                        color = Color.GREEN;
+                    }
+                    colorChoice.setBackgroundResource(R.drawable.spinner_green);
                     break;
             }
         }
@@ -147,13 +187,16 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.pen_button:
-                System.out.println("pen");
-                paint = new Paint();
-                paint.setColor(Color.BLACK);
+                resetImag();
+                flag = false;
+                penButton.setImageResource(R.drawable.pen_press);
+                paint.setColor(color);
                 paint.setStrokeWidth(5);
                 break;
             case R.id.eraser_button:
-                paint = new Paint();
+                resetImag();
+                flag = true;
+                eraserButton.setImageResource(R.drawable.ersaer_press);
                 paint.setColor(Color.WHITE);
                 paint.setStrokeWidth(100);
                 break;
@@ -162,15 +205,20 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.invisibleButton:
                 dialog2();
-
                 break;
         }
     }
     private void initImage(){
+        colorChoice.setPromptId(R.drawable.spinner_black);
+        resetImag();
+        penButton.setImageResource(R.drawable.pen_press);
+
         this.imageView = (ImageView)view.findViewById(R.id.paintView);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         System.out.println("heigth2 : " + dm.heightPixels);
         System.out.println("width2 : " + dm.widthPixels);
+
+
         int VIEW_WIDTH = dm.widthPixels;
         int VIEW_HEIGHT = dm.heightPixels - (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,105,
                 this.getResources().getDisplayMetrics());
@@ -178,9 +226,10 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         baseBitmap = Bitmap.createBitmap(VIEW_WIDTH,VIEW_HEIGHT,Bitmap.Config.ARGB_8888);
         canvas = new Canvas(baseBitmap);
         canvas.drawColor(Color.WHITE);
-        paint = new Paint();
-        paint.setColor(Color.BLACK);
+        //paint = new Paint();
+        paint.setColor(color);
         paint.setStrokeWidth(5);
+
         canvas.drawBitmap(baseBitmap,new Matrix(),paint);
 
         imageView.setImageBitmap(baseBitmap);
@@ -280,12 +329,18 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
     }
 
     public void clear(){
-        Paint paint = new Paint();
+
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
         canvas.drawPaint(paint);
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
         initImage();
 
+
+    }
+
+    public void resetImag(){
+        penButton.setImageResource(R.drawable.pen);
+        eraserButton.setImageResource(R.drawable.eraser);
     }
 
 

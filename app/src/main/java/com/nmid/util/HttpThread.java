@@ -1,12 +1,7 @@
 package com.nmid.util;
 
-import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.widget.Toast;
-
-import com.nmid.util.BaseData;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,15 +14,11 @@ import java.net.URL;
  */
 public class HttpThread extends Thread{
     String str;
-
     String Url;
-
     String username;
-
     String password;
     Handler handler;
     BaseData baseData = new BaseData();
-    Context context;
     public static String[]  ss = new String[4];
     public HttpThread(String Url,String username, String password, Handler handler){
         this.Url = Url;
@@ -38,6 +29,7 @@ public class HttpThread extends Thread{
 
     private void doGet(){
         Url = Url+"?username="+username+"&password="+password;
+        System.out.println(username+password+"  ");
         try {
             URL httpUrl = new URL(Url);
             HttpURLConnection conn =(HttpURLConnection)httpUrl.openConnection();
@@ -68,13 +60,12 @@ public class HttpThread extends Thread{
         try{
             Message message = new Message();
             message.arg1 = Integer.parseInt(ss[0]);
-            System.out.println("score..."+ss[1]);
-            System.out.println("number..."+ss[2]);
-            baseData.setBaseData(ss[1],ss[2]);
-            System.out.println("message"+message.arg1);
+            if (ss.length>1){
+                baseData.setBaseData(ss[1],ss[2]);
+            }
             handler.sendMessage(message);
         }catch (NumberFormatException e){
-            Toast.makeText(context,"网络连接错误",Toast.LENGTH_SHORT).show();
+            System.out.println("e");
         }
 
 

@@ -5,13 +5,15 @@
     android:background="@drawable/border"
     android:orientation="horizontal">
 
-    <Button
+    <ImageButton
         android:id="@+id/slidebt"
-        android:layout_margin="5dp"
-        android:layout_width="40dp"
-        android:layout_height="25dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="10dp"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
-        android:background="@drawable/slidebt"
+        android:background="@drawable/slide_selector"
+        android:src="@drawable/slidebt"
         />
     <TextView
         android:layout_width="wrap_content"

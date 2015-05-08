@@ -5,12 +5,18 @@ import android.os.StrictMode;
 
 import com.nmid.util.IPAddress;
 
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 /**
  * Created by tornado on 2015/4/7.
@@ -22,10 +28,16 @@ public class Upload extends Thread{
     }
     public void run()
     {
+        synchronized (fileName) {
+            sendName(fileName);
+            sendPicture();
+        }
+    }
+    private void sendPicture(){
         File sdCardDir = Environment.getExternalStorageDirectory();
         String path = sdCardDir.getPath()+"/大画师";
         String uploadFile =path+"/"+fileName;
-        String postUrl = IPAddress.IP+"//GreatArtist/uploading.php";
+        String postUrl = IPAddress.IP+"/GreatArtist/uploading.php";
         String end = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";
@@ -46,12 +58,15 @@ public class Upload extends Thread{
           /* 设置请求属性 */
             con.setRequestProperty("Connection", "Keep-Alive");
             con.setRequestProperty("Charset", "UTF-8");
-            con.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+
+            con.setRequestProperty("Content-Type", "multipart/form-data;;boundary=" + boundary);
           /*设置StrictMode 否则HTTPURLConnection连接失败，因为这是在主进程中进行网络连接*/
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
           /* 设置DataOutputStream，getOutputStream中默认调用connect()*/
+            //String ff = URLEncoder.encode(fileName,"GBK");
             DataOutputStream ds = new DataOutputStream(con.getOutputStream());  //output to the connection
             ds.writeBytes(twoHyphens + boundary + end);
+
             ds.writeBytes("Content-Disposition: form-data; " +
                     "name=\"file\";filename=\"" +
                     fileName + "\"" + end);
@@ -69,9 +84,9 @@ public class Upload extends Thread{
                 ds.write(buffer, 0, length);
             }
             ds.writeBytes(end);
-            ds.writeBytes(twoHyphens + boundary + end);
-            ds.writeBytes("123" + end);
-            ds.writeBytes(end);
+//            ds.writeBytes(twoHyphens + boundary + end);
+//            ds.writeBytes("123" + end);
+//            ds.writeBytes(end);
             ds.writeBytes(twoHyphens + boundary + twoHyphens + end);
           /* 关闭流，写入的东西自动生成Http正文*/
             fStream.close();
@@ -86,11 +101,39 @@ public class Upload extends Thread{
                 b.append((char) ch);
             }
           /* 显示网页响应内容 */
-      //      Toast.makeText(MainActivity.this, b.toString().trim(), Toast.LENGTH_SHORT).show();//Post成功
+            //      Toast.makeText(MainActivity.this, b.toString().trim(), Toast.LENGTH_SHORT).show();//Post成功
         } catch (Exception e)
         {
             /* 显示异常信息 */
-     //       Toast.makeText(MainActivity.this, "Fail:" + e, Toast.LENGTH_SHORT).show();//Post失败
+            //       Toast.makeText(MainActivity.this, "Fail:" + e, Toast.LENGTH_SHORT).show();//Post失败
         }
+
     }
+
+    private void sendName(String fileName){
+//        String[] ss = fileName.split("\\.");
+//        System.out.println(ss[0]+"1111  ");
+//        String url = IPAddress.IP+"GreatArtist/answer.php";;
+//        try {
+//            URL httpUrl = new URL(url);
+//            HttpURLConnection conn = (HttpURLConnection) httpUrl.openConnection();
+//            conn.setRequestMethod("POST");
+//            conn.setReadTimeout(5000);
+//            OutputStream out = conn.getOutputStream();
+//            out.write(ss[0].getBytes());
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//            StringBuffer sb = new StringBuffer();
+//            String str ;
+//            while((str=reader.readLine())!=null){
+//                sb.append(str);
+//            }
+//            System.out.println("response:"+sb);
+//
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+   }
 }

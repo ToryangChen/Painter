@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.nmid.painterdemo.R;
@@ -36,6 +37,7 @@ public class GuessLVAdapter extends BaseAdapter {
         ImageView newImageView;
         EditText answerET;
         ImageButton commitBtn;
+        ProgressBar updating;
     }
     public void setUser(List<String> list)
     {
@@ -45,10 +47,7 @@ public class GuessLVAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         int i =ListData.list.size();
-        if (i<6) {
-            return ListData.list.size();
-        }
-        return 5;
+            return i;
     }
 
     @Override
@@ -72,12 +71,16 @@ public class GuessLVAdapter extends BaseAdapter {
             holder.newImageView = (ImageView)convertView.findViewById(R.id.newview);
             holder.answerET = (EditText) convertView.findViewById(R.id.answerET);
             holder.commitBtn = (ImageButton) convertView.findViewById(R.id.commitBtn);
+            holder.updating = (ProgressBar) convertView.findViewById(R.id.updating);
+            holder.updating.setVisibility(View.VISIBLE);
             convertView.setTag(holder);
+
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
         Picasso.with(convertView.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
-                +ListData.list.get(position)).into(holder.newImageView);
+                +ListData.list.get(position)).resize(200,200).into(holder.newImageView);
+        holder.updating.setVisibility(View.GONE);
 //        File sdCardDir = Environment.getExternalStorageDirectory();
 //        String path = sdCardDir.getPath()+"/大画师";
 //        String uploadFile =path+"/"+"1.jpg";
@@ -96,6 +99,7 @@ public class GuessLVAdapter extends BaseAdapter {
                 }
                 else if(getAnswer.equals(ListData.map.get(ListData.list.get(position)))){
                     Toast.makeText(View.getContext(),"恭喜您，答对了",Toast.LENGTH_SHORT).show();
+
                 }
                 else{
                     Toast.makeText(View.getContext(),"您离正确答案还有点距离，再接再厉哟",Toast.LENGTH_SHORT).show();

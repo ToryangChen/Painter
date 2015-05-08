@@ -16,6 +16,7 @@ import com.nmid.application.MyApplication;
 import com.nmid.util.BaseData;
 import com.nmid.util.HttpThread;
 import com.nmid.util.IPAddress;
+import com.nmid.util.URLConnect;
 
 /**
  * Created by Toryang on 2015/3/25.
@@ -31,15 +32,15 @@ public class LoginActivity extends Activity implements View.OnClickListener{
         public void handleMessage(Message msg) {
             flag = msg.arg1;
             login(flag);
-            System.out.println(flag+",,,1111111111111");
+
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        new URLConnect(handler).start();
         MyApplication.getInstance().addActivity(LoginActivity.this);
         initView();
 

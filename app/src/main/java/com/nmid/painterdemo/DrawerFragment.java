@@ -29,7 +29,7 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
     private Fragment paintFragment;
     private Fragment guessFragment;
 
-    private Button change;
+    private ImageButton change;
 
 
     private DrawerLayout layout;
@@ -58,7 +58,7 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
         mImgguess = (ImageButton)rootView.findViewById(R.id.button_guess);
         mImgpaint = (ImageButton)rootView.findViewById(R.id.button_paint);
 
-        change = (Button)rootView.findViewById(R.id.slidebt);
+        change = (ImageButton)rootView.findViewById(R.id.slidebt);
 
         paintLayout.setOnClickListener(this);
         guessLayout.setOnClickListener(this);
@@ -138,7 +138,7 @@ public class DrawerFragment extends Fragment implements View.OnClickListener {
     }
     private void resetImgs() {
         mImgguess.setImageResource(R.drawable.border_null);
-        System.out.println("set-------------------");
+
         mImgpaint.setImageResource(R.drawable.border_null);
 
     }

@@ -66,6 +66,10 @@ public class RegisterActivity extends ActionBarActivity {
        }
        else if(!(rPassword.getText().toString()).equals(rgPassword.getText().toString())){
            Toast.makeText(this,"密码不一致",Toast.LENGTH_SHORT).show();
+       }else{
+           Toast.makeText(RegisterActivity.this,"here",Toast.LENGTH_SHORT).show();
+           new HttpThread(IPAddress.IP+"GreatArtist/reg.php",rUsername.getText().toString(),
+                   rPassword.getText().toString(),handler).start();
        }
    }
    public class MyClickListener implements View.OnClickListener{
@@ -73,8 +77,6 @@ public class RegisterActivity extends ActionBarActivity {
        @Override
        public void onClick(View v) {
            judgement();
-          new HttpThread(IPAddress.IP+"GreatArtist/reg.php",rUsername.getText().toString(),
-                   rPassword.getText().toString(),handler);
        }
    }
 

@@ -1,16 +1,24 @@
 package com.nmid.painterdemo;
 
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.nmid.adapter.GuessLVAdapter;
 import com.nmid.util.URLConnect;
+import com.nmid.util.Upload;
 
 //import com.nmid.painterdemo.com.nmid.GuessLVAdapter;
 
@@ -18,9 +26,17 @@ import com.nmid.util.URLConnect;
  * Created by Toryang on 2015/3/30.
  */
 public class GuessFragment extends Fragment {
+
     ListView guessLV = null;
-    static GuessLVAdapter guessLVAdapter =null;
-    Button test = null;
+    public static GuessLVAdapter guessLVAdapter =null;
+    Button update = null;
+    Handler Ghandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            guessLVAdapter.notifyDataSetChanged();
+
+        }
+    };
 
 
     @Override
@@ -28,15 +44,33 @@ public class GuessFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.activity_guess,container,false);
         guessLV = (ListView)rootView.findViewById(R.id.guessLV);
-        test = (Button) rootView.findViewById(R.id.test);
-        test.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new URLConnect().start();
-            }
-        });
+        update = (Button) rootView.findViewById(R.id.test);
         guessLVAdapter = new GuessLVAdapter(inflater);
         guessLV.setAdapter(guessLVAdapter);
+        guessLV.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == 0) {
+                    update.setVisibility(View.VISIBLE);
+                } else {
+                    update.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+        update.getBackground().setAlpha(100);
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new URLConnect(Ghandler).start();
+            }
+        });
+
         return rootView;
     }
 

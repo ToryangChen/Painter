@@ -12,6 +12,16 @@ import java.util.List;
 public class MyApplication extends Application {
     private List<Activity> activityList = new LinkedList<Activity>();
     private static MyApplication instance;
+    private static Boolean Flag = false;
+
+    public static void setFlag(Boolean flag) {
+        Flag = flag;
+    }
+
+    public static Boolean getFlag() {
+        return Flag;
+    }
+
     private MyApplication(){
 
     }

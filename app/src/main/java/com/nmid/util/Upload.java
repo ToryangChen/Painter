@@ -23,11 +23,14 @@ import java.net.URLEncoder;
  */
 public class Upload extends Thread{
     String fileName =null;
+    String uploadFilename = null;
+    BaseData baseData =new BaseData();
     public Upload(String fileName){
         this.fileName = fileName;
     }
     public void run()
     {
+        uploadFilename= baseData.getUsername()+'$'+fileName;
         synchronized (fileName) {
             sendName(fileName);
             sendPicture();
@@ -69,7 +72,7 @@ public class Upload extends Thread{
 
             ds.writeBytes("Content-Disposition: form-data; " +
                     "name=\"file\";filename=\"" +
-                    fileName + "\"" + end);
+                    uploadFilename + "\"" + end);
             ds.writeBytes(end);
           /* 取得文件的FileInputStream */
             FileInputStream fStream = new FileInputStream(uploadFile);

@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import com.nmid.painterdemo.R;
 import com.nmid.util.ApkEntity;
+import com.nmid.util.IPAddress;
+import com.nmid.util.ListData;
+import com.squareup.picasso.Picasso;
 
 public class ListAdapter extends BaseAdapter{
 	LayoutInflater inflater;
@@ -58,6 +61,8 @@ public class ListAdapter extends BaseAdapter{
             viewHolder.myImage = (ImageView)arg1.findViewById(R.id.image);
             viewHolder.myText = (TextView)arg1.findViewById(R.id.name);
             arg1.setTag(viewHolder);
+            Picasso.with(arg1.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
+                    + ListData.mypainterlist.get(arg0)).resize(480,800).into(viewHolder.myImage);
         }else{
             viewHolder = (ViewHolder)arg1.getTag();
         }

@@ -80,13 +80,13 @@ public class GuessLVAdapter extends BaseAdapter {
             holder.commitBtn = (ImageButton) convertView.findViewById(R.id.commitBtn);
 
             convertView.setTag(holder);
+            Picasso.with(convertView.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
+                    +ListData.list.get(position)).resize(480,800).into(holder.newImageView);
 
+            holder.time.setText(entity.getName());
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
-        holder.time.setText(entity.getName());
-//        Picasso.with(convertView.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
-//                +ListData.list.get(position)).resize(200,200).into(holder.newImageView);
 
 
 //        File sdCardDir = Environment.getExternalStorageDirectory();

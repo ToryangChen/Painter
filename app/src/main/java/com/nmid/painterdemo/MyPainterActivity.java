@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.nmid.adapter.ListAdapter;
 import com.nmid.application.MyApplication;
 import com.nmid.util.ApkEntity;
+import com.nmid.util.ListData;
 
 import java.util.ArrayList;
 
@@ -48,17 +49,19 @@ public class MyPainterActivity extends ActionBarActivity implements RefreshListV
 
     private void setData() {
         apk_list = new ArrayList<ApkEntity>();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < ListData.mypainterlist.size(); i++) {
             ApkEntity entity = new ApkEntity();
-            entity.setName("默认数据");
+            entity.setPaintJson(ListData.mypainterlist.get(i));
+            entity.setName(ListData.map.get(entity.getPaintJson()));
             apk_list.add(entity);
         }
     }
     private void setReflashData() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < ListData.mypainterlist.size(); i++) {
             ApkEntity entity = new ApkEntity();
-            entity.setName("shuxin");
-            apk_list.add(0,entity);
+            entity.setPaintJson(ListData.mypainterlist.get(i));
+            entity.setName(ListData.map.get(entity.getPaintJson()));
+            apk_list.add(entity);
         }
     }
 

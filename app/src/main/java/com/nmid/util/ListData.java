@@ -11,4 +11,7 @@ import java.util.Map;
 public class ListData {
     public static List<String> list = new ArrayList<>();
     public static Map<String,String> map= new HashMap<>();
+
+    public static List<String> mypainterlist = new ArrayList<>();
+    public static Map<String,String> mypaintermap= new HashMap<>();
 }

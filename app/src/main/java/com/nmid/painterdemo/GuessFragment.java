@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.nmid.adapter.GuessLVAdapter;
 import com.nmid.adapter.ListAdapter;
 import com.nmid.util.ApkEntity;
+import com.nmid.util.ListData;
 import com.nmid.util.URLConnect;
 import com.nmid.util.Upload;
 
@@ -49,9 +50,10 @@ public class GuessFragment extends Fragment implements RefreshListView.IReflashL
 
     private void setData() {
         apk_list = new ArrayList<ApkEntity>();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < ListData.list.size(); i++) {
             ApkEntity entity = new ApkEntity();
-            entity.setName("默认数据");
+            entity.setPaintJson(ListData.list.get(i));
+            entity.setName(ListData.map.get(entity.getPaintJson()));
             apk_list.add(entity);
         }
 
@@ -67,10 +69,11 @@ public class GuessFragment extends Fragment implements RefreshListView.IReflashL
         }
     }
     private void setReflashData() {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < ListData.list.size(); i++) {
             ApkEntity entity = new ApkEntity();
-            entity.setName("shuxin");
-            apk_list.add(0,entity);
+            entity.setPaintJson(ListData.list.get(i));
+            entity.setName(ListData.map.get(entity.getPaintJson()));
+            apk_list.add(entity);
         }
     }
 

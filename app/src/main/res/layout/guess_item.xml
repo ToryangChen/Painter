@@ -13,8 +13,9 @@
         android:layout_weight="1">
         <ImageView
             android:id="@+id/newview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="360dp"
+            android:layout_centerInParent="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/org"
             android:layout_centerVertical="true"
@@ -70,6 +71,7 @@
             android:id="@+id/answerET"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
+        android:hint="请输入答案~"
             android:layout_toLeftOf="@+id/commitBtn"
             android:layout_toStartOf="@+id/commitBtn" />
 

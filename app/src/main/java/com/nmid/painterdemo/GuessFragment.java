@@ -69,6 +69,7 @@ public class GuessFragment extends Fragment implements RefreshListView.IReflashL
         }
     }
     private void setReflashData() {
+        apk_list.clear();
         for (int i = 0; i < ListData.list.size(); i++) {
             ApkEntity entity = new ApkEntity();
             entity.setPaintJson(ListData.list.get(i));

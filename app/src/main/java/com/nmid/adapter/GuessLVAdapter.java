@@ -87,15 +87,6 @@ public class GuessLVAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
-
-
-//        File sdCardDir = Environment.getExternalStorageDirectory();
-//        String path = sdCardDir.getPath()+"/大画师";
-//        String uploadFile =path+"/"+"1.jpg";
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inSampleSize = 2;
-//        Bitmap bm = BitmapFactory.decodeFile(uploadFile, options);
-//        holder.newImageView.setImageBitmap(bm);
         final View View=convertView;
         holder.commitBtn.setOnClickListener(new View.OnClickListener() {
 

@@ -69,6 +69,7 @@ public class MyPainterActivity extends ActionBarActivity implements RefreshListV
         }
     }
     private void setReflashData() {
+        apk_list.clear();
         for (int i = 0; i < ListData.mypainterlist.size(); i++) {
             ApkEntity entity = new ApkEntity();
             entity.setPaintJson(ListData.mypainterlist.get(i));

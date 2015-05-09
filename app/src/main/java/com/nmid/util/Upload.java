@@ -96,13 +96,13 @@ public class Upload extends Thread{
           /* 关闭DataOutputStream */
             ds.close();
           /* 从返回的输入流读取响应信息 */
-            InputStream is = con.getInputStream();  //input from the connection 正式建立HTTP连接
-            int ch;
-            StringBuffer b = new StringBuffer();
-            while ((ch = is.read()) != -1)
-            {
-                b.append((char) ch);
-            }
+//            InputStream is = con.getInputStream();  //input from the connection 正式建立HTTP连接
+//            int ch;
+//            StringBuffer b = new StringBuffer();
+//            while ((ch = is.read()) != -1)
+//            {
+//                b.append((char) ch);
+//            }
           /* 显示网页响应内容 */
             //      Toast.makeText(MainActivity.this, b.toString().trim(), Toast.LENGTH_SHORT).show();//Post成功
         } catch (Exception e)

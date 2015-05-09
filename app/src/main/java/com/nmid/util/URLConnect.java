@@ -34,7 +34,6 @@ public class URLConnect extends Thread{
     }
     @Override
     public void run()  {
-        BaseData baseData = new BaseData();
         String[] json =null ;
         List<String> list = new ArrayList<>();
         Map<String,String> map= new HashMap<>();

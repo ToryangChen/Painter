@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nmid.painterdemo.R;
+import com.nmid.util.AddScore;
 import com.nmid.util.ApkEntity;
 import com.nmid.util.IPAddress;
 import com.nmid.util.ListData;
@@ -102,6 +103,8 @@ public class GuessLVAdapter extends BaseAdapter {
                 else if(getAnswer.equals(ListData.map.get(ListData.list.get(position)))){
                     Toast.makeText(View.getContext(),"恭喜您，答对了",Toast.LENGTH_SHORT).show();
 
+
+                    new AddScore().start();
                 }
                 else{
                     Toast.makeText(View.getContext(),"您离正确答案还有点距离，再接再厉哟",Toast.LENGTH_SHORT).show();

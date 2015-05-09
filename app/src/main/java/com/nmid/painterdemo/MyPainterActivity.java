@@ -1,12 +1,17 @@
 package com.nmid.painterdemo;
 
+
+import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+
+
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.ListView;
+import android.view.View;
 
 import com.nmid.adapter.ListAdapter;
 import com.nmid.application.MyApplication;
@@ -29,9 +34,16 @@ public class MyPainterActivity extends ActionBarActivity implements RefreshListV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypaint);
         MyApplication.getInstance().addActivity(MyPainterActivity.this);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("我的作品");
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitleTextColor(Color.WHITE);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         setData();
         showList(apk_list);
 

@@ -3,6 +3,7 @@ package com.nmid.util;
 import org.apache.http.HttpConnection;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -16,9 +17,11 @@ public class AddScore implements Runnable{
         BaseData baseData = new BaseData();
         try {
             URL addScoreURL = new URL(IPAddress.IP+"addScore.php?username="+baseData.getUsername());
-            URLConnection connection = addScoreURL.openConnection();
+            HttpURLConnection connection = (HttpURLConnection) addScoreURL.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
+            connection.setUseCaches(false);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

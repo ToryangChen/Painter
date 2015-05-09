@@ -30,7 +30,7 @@ public class Upload extends Thread{
     }
     public void run()
     {
-        uploadFilename= baseData.getUsername()+'$'+fileName;
+        uploadFilename= baseData.getUsername()+"$"+fileName;
         synchronized (fileName) {
             sendName(fileName);
             sendPicture();
@@ -64,7 +64,7 @@ public class Upload extends Thread{
 
             con.setRequestProperty("Content-Type", "multipart/form-data;;boundary=" + boundary);
           /*设置StrictMode 否则HTTPURLConnection连接失败，因为这是在主进程中进行网络连接*/
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
+         //   StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
           /* 设置DataOutputStream，getOutputStream中默认调用connect()*/
             //String ff = URLEncoder.encode(fileName,"GBK");
             DataOutputStream ds = new DataOutputStream(con.getOutputStream());  //output to the connection
@@ -96,13 +96,13 @@ public class Upload extends Thread{
           /* 关闭DataOutputStream */
             ds.close();
           /* 从返回的输入流读取响应信息 */
-//            InputStream is = con.getInputStream();  //input from the connection 正式建立HTTP连接
-//            int ch;
-//            StringBuffer b = new StringBuffer();
-//            while ((ch = is.read()) != -1)
-//            {
-//                b.append((char) ch);
-//            }
+            InputStream is = con.getInputStream();  //input from the connection 正式建立HTTP连接
+            int ch;
+            StringBuffer b = new StringBuffer();
+            while ((ch = is.read()) != -1)
+            {
+                b.append((char) ch);
+            }
           /* 显示网页响应内容 */
             //      Toast.makeText(MainActivity.this, b.toString().trim(), Toast.LENGTH_SHORT).show();//Post成功
         } catch (Exception e)

@@ -37,6 +37,8 @@ public class URLConnect extends Thread{
         String[] json =null ;
         List<String> list = new ArrayList<>();
         Map<String,String> map= new HashMap<>();
+        List<String> mylist = new ArrayList<>();
+        Map<String,String> mymap= new HashMap<>();
         try {
           String answerURL = IPAddress.IP+"GreatArtist/pushOther.php?username="+username;
             URL getURL = new URL(answerURL);
@@ -60,6 +62,7 @@ public class URLConnect extends Thread{
 
             String str = b.toString().trim();
             System.out.println(str+"=buf");
+            System.out.println("-----------------------------------------");
             json = str.split("\\</br>");
             for (String s : json){
                 System.out.println(s);
@@ -70,6 +73,9 @@ public class URLConnect extends Thread{
                 map.put(path,answer);
                 list.add(path);
             }
+            is.close();
+            connection.disconnect();
+
 
         } catch (java.io.IOException e) {
             e.printStackTrace();
@@ -94,35 +100,37 @@ public class URLConnect extends Thread{
         try {
             String answerURL2 = IPAddress.IP+"GreatArtist/pushMyself.php?username="+username;
             URL getURL2 = new URL(answerURL2);
-            HttpURLConnection connection = (HttpURLConnection) getURL2.openConnection();
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.setUseCaches(false);
-            connection.setRequestMethod("GET");
-            connection.setRequestProperty("Connection", "Keep-Alive");
-            connection.setRequestProperty("Charset", "UTF-8");
+             HttpURLConnection connection2 = (HttpURLConnection) getURL2.openConnection();
+            connection2.setDoInput(true);
+            connection2.setDoOutput(true);
+            connection2.setUseCaches(false);
+            connection2.setRequestMethod("GET");
+            connection2.setRequestProperty("Connection", "Keep-Alive");
+            connection2.setRequestProperty("Charset", "UTF-8");
 //            connection.setRequestProperty("Content-Type", "application/json");
 
 
-            InputStream is = connection.getInputStream();
+            InputStream is2 = connection2.getInputStream();
             int ch;
             StringBuffer b = new StringBuffer();
-            while ((ch = is.read()) != -1)
+            while ((ch = is2.read()) != -1)
             {
                 b.append((char) ch);
             }
+            is2.close();
 
-            String str = b.toString().trim();
-            System.out.println(str+"=buf");
-            json = str.split("\\</br>");
+
+            String str2 = b.toString().trim();
+            System.out.println(str2+"=buf");
+            json = str2.split("\\</br>");
             for (String s : json){
                 System.out.println(s);
                 JSONObject json1= new JSONObject(s);
                 String answer = json1.getString("answer");
                 String path = json1.getString("url");
                 System.out.println(answer);
-                map.put(path,answer);
-                list.add(path);
+                mymap.put(path,answer);
+                mylist.add(path);
             }
 
         } catch (java.io.IOException e) {
@@ -131,10 +139,10 @@ public class URLConnect extends Thread{
         catch (JSONException e) {
             e.printStackTrace();
         }
-        synchronized (list) {
-            ListData.mypaintermap = map;
-            ListData.mypainterlist = list;
-        }
+
+            ListData.mypaintermap = mymap;
+            ListData.mypainterlist = mylist;
+
 
     }
 }

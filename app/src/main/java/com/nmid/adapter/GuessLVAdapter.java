@@ -87,6 +87,9 @@ public class GuessLVAdapter extends BaseAdapter {
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
+
+
+
         final View View=convertView;
         holder.commitBtn.setOnClickListener(new View.OnClickListener() {
 

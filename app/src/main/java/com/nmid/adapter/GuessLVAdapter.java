@@ -1,5 +1,6 @@
 package com.nmid.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,9 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nmid.painterdemo.R;
+import com.nmid.util.ApkEntity;
 import com.nmid.util.IPAddress;
 import com.nmid.util.ListData;
 import com.squareup.picasso.Picasso;
@@ -24,35 +27,37 @@ import java.util.List;
  */
 
 public class GuessLVAdapter extends BaseAdapter {
-    List<String> list = new ArrayList<>();
+    List<ApkEntity> apk_list = new ArrayList<>();
     // Context context;
     LayoutInflater mInflater;
 
-    public GuessLVAdapter(LayoutInflater mInflater) {
+    public GuessLVAdapter(Context context,List<ApkEntity> apk_list) {
         super();
-        this.mInflater = mInflater;
-
+        this.apk_list = apk_list;
+        this.mInflater = LayoutInflater.from(context);
     }
+
+    public void onDateChange(ArrayList<ApkEntity> apk_list) {
+        this.apk_list = apk_list;
+        this.notifyDataSetChanged();
+    }
+
     class ViewHolder{
         ImageView newImageView;
         EditText answerET;
         ImageButton commitBtn;
-        ProgressBar updating;
-    }
-    public void setUser(List<String> list)
-    {
-        this.list =list;
+        TextView time;
     }
 
     @Override
     public int getCount() {
-        int i =ListData.list.size();
-            return i;
+        //int i =ListData.list.size();
+            return apk_list.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return apk_list.get(position);
     }
 
     @Override
@@ -63,24 +68,27 @@ public class GuessLVAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ViewHolder holder;
+        ApkEntity entity = apk_list.get(position);
         //     LayoutInflater mInflater = LayoutInflater.from(context);
         if(convertView == null)
         {
             convertView = mInflater.inflate(R.layout.guess_item,null);
             holder = new ViewHolder();
             holder.newImageView = (ImageView)convertView.findViewById(R.id.newview);
+            holder.time = (TextView)convertView.findViewById(R.id.time);
             holder.answerET = (EditText) convertView.findViewById(R.id.answerET);
             holder.commitBtn = (ImageButton) convertView.findViewById(R.id.commitBtn);
-            holder.updating = (ProgressBar) convertView.findViewById(R.id.updating);
-            holder.updating.setVisibility(View.VISIBLE);
+
             convertView.setTag(holder);
 
         }else{
             holder = (ViewHolder)convertView.getTag();
         }
-        Picasso.with(convertView.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
-                +ListData.list.get(position)).resize(200,200).into(holder.newImageView);
-        holder.updating.setVisibility(View.GONE);
+        holder.time.setText(entity.getName());
+//        Picasso.with(convertView.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
+//                +ListData.list.get(position)).resize(200,200).into(holder.newImageView);
+
+
 //        File sdCardDir = Environment.getExternalStorageDirectory();
 //        String path = sdCardDir.getPath()+"/大画师";
 //        String uploadFile =path+"/"+"1.jpg";
@@ -106,8 +114,6 @@ public class GuessLVAdapter extends BaseAdapter {
                 }
             }
         });
-
-
 
         return convertView;
     }

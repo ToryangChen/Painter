@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.nmid.painterdemo.CustomListView
+
+    <com.nmid.painterdemo.RefreshListView
         android:id="@+id/list_mypaint"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-     </com.nmid.painterdemo.CustomListView>
+
+     </com.nmid.painterdemo.RefreshListView>
 </LinearLayout>

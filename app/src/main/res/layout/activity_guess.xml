@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <ListView
+    <com.nmid.painterdemo.RefreshListView
         android:id="@+id/guessLV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

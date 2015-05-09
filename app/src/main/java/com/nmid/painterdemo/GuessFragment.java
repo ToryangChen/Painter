@@ -1,11 +1,13 @@
 package com.nmid.painterdemo;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,61 +19,77 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nmid.adapter.GuessLVAdapter;
+import com.nmid.adapter.ListAdapter;
+import com.nmid.util.ApkEntity;
 import com.nmid.util.URLConnect;
 import com.nmid.util.Upload;
+
+import java.util.ArrayList;
 
 //import com.nmid.painterdemo.com.nmid.GuessLVAdapter;
 
 /**
  * Created by Toryang on 2015/3/30.
  */
-public class GuessFragment extends Fragment {
+public class GuessFragment extends Fragment implements RefreshListView.IReflashListener{
 
-    ListView guessLV = null;
-    public static GuessLVAdapter guessLVAdapter =null;
-    Button update = null;
-    Handler Ghandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            guessLVAdapter.notifyDataSetChanged();
+    RefreshListView listView;
+    GuessLVAdapter guessLVAdapter;
+    ArrayList<ApkEntity> apk_list;
+    View rootView;
+    LayoutInflater inflater;
+    @Override
+    public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.activity_guess,container,false);
+        this.inflater = inflater;
+        setData();
+        showList(apk_list,rootView,inflater);
+        return rootView;
+    }
 
+    private void setData() {
+        apk_list = new ArrayList<ApkEntity>();
+        for (int i = 0; i < 1; i++) {
+            ApkEntity entity = new ApkEntity();
+            entity.setName("默认数据");
+            apk_list.add(entity);
         }
-    };
 
+    }
+    private void showList(ArrayList<ApkEntity> apk_list,View rootView,LayoutInflater inflater) {
+        if (guessLVAdapter == null) {
+            listView = (RefreshListView)rootView.findViewById(R.id.guessLV);
+            listView.setInterface(this);
+            guessLVAdapter = new GuessLVAdapter(getActivity(),apk_list);
+            listView.setAdapter(guessLVAdapter);
+        } else {
+            guessLVAdapter.onDateChange(apk_list);
+        }
+    }
+    private void setReflashData() {
+        for (int i = 0; i < 2; i++) {
+            ApkEntity entity = new ApkEntity();
+            entity.setName("shuxin");
+            apk_list.add(0,entity);
+        }
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.activity_guess,container,false);
-        guessLV = (ListView)rootView.findViewById(R.id.guessLV);
-        update = (Button) rootView.findViewById(R.id.test);
-        guessLVAdapter = new GuessLVAdapter(inflater);
-        guessLV.setAdapter(guessLVAdapter);
-        guessLV.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-                if (scrollState == 0) {
-                    update.setVisibility(View.VISIBLE);
-                } else {
-                    update.setVisibility(View.GONE);
-                }
-            }
+    public void onRelash() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
+            public void run() {
+                // TODO Auto-generated method stub
+                //获取最新数据
+                setReflashData();
+                //通知界面显示
+                showList(apk_list,rootView,inflater);
+                //通知listview 刷新数据完毕；
+                listView.reflashComplete();
             }
-        });
-        update.getBackground().setAlpha(100);
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                new URLConnect(Ghandler).start();
-            }
-        });
-
-        return rootView;
+        }, 2000);
     }
 
 }

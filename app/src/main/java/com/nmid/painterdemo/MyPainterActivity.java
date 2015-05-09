@@ -1,39 +1,91 @@
 package com.nmid.painterdemo;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.widget.AbsListView;
 
-import com.nmid.adapter.MyPaintAdapter;
+import android.view.MenuItem;
+import android.widget.ListView;
+
+import com.nmid.adapter.ListAdapter;
+import com.nmid.application.MyApplication;
+import com.nmid.util.ApkEntity;
+
+import java.util.ArrayList;
+
 
 /**
  * Created by Toryang on 2015/5/6.
  */
-public class MyPainterActivity extends ActionBarActivity {
-    private CustomListView listView;
-    private MyPaintAdapter myPaintAdapter;
+public class MyPainterActivity extends ActionBarActivity implements RefreshListView.IReflashListener {
+    private RefreshListView listView;
+    private ListAdapter listAdapter;
+    ArrayList<ApkEntity> apk_list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypaint);
-        initView();
+        MyApplication.getInstance().addActivity(MyPainterActivity.this);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("我的作品");
+        setData();
+        showList(apk_list);
+
+    }
+    private void showList(ArrayList<ApkEntity> apk_list) {
+        if (listAdapter == null) {
+            listView = (RefreshListView) findViewById(R.id.list_mypaint);
+            listView.setInterface(this);
+            listAdapter = new ListAdapter(this,apk_list);
+            listView.setAdapter(listAdapter);
+        } else {
+            listAdapter.onDateChange(apk_list);
+        }
     }
 
-    private void initView() {
-        listView = (CustomListView)findViewById(R.id.list_mypaint);
-        myPaintAdapter = new MyPaintAdapter(getLayoutInflater());
-        listView.setAdapter(myPaintAdapter);
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+    private void setData() {
+        apk_list = new ArrayList<ApkEntity>();
+        for (int i = 0; i < 1; i++) {
+            ApkEntity entity = new ApkEntity();
+            entity.setName("默认数据");
+            apk_list.add(entity);
+        }
+    }
+    private void setReflashData() {
+        for (int i = 0; i < 2; i++) {
+            ApkEntity entity = new ApkEntity();
+            entity.setName("shuxin");
+            apk_list.add(0,entity);
+        }
+    }
+
+    @Override
+    public void onRelash() {
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+
             @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+            public void run() {
+                //获取最新数据
+                setReflashData();
+                //通知界面显示
+                showList(apk_list);
+                //通知listview 刷新数据完毕；
+                listView.reflashComplete();
             }
+        }, 2000);
+    }
 
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-            }
-        });
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

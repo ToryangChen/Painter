@@ -28,14 +28,6 @@
             android:src="@drawable/newmessage"
             android:layout_alignLeft="@id/newview"
             android:layout_alignTop="@id/newview"/>-->
-        <ProgressBar
-            android:id="@+id/updating"
-            android:layout_width="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:layout_height="100dip"
-            android:layout_alignParentTop="true"
-            android:visibility="gone"/>
 
     </RelativeLayout>
     <LinearLayout
@@ -95,6 +87,7 @@
             android:src="@drawable/date"
             android:layout_gravity="center" />
         <TextView
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

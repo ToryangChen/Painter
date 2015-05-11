@@ -4,6 +4,7 @@ package com.nmid.painterdemo;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -114,6 +115,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             case R.id.menu_message:
                 break;
             case R.id.menu_logout:
+                OperateDb();
                 System.exit(0);
                 break;
 
@@ -155,5 +157,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         builder.create().show();
 
+    }
+
+    private void OperateDb(){
+        SharedPreferences sharedPreferences = getSharedPreferences("Painter",MODE_WORLD_READABLE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear().commit();
+
+        editor.putString("username",baseData.getUsername());
+        editor.putString("passward",null);
+        editor.commit();
     }
 }

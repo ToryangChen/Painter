@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,6 +20,9 @@ import com.nmid.util.HttpThread;
 import com.nmid.util.IPAddress;
 import com.nmid.util.URLConnect;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by Toryang on 2015/3/25.
  */
@@ -26,9 +30,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     ImageButton loginButton;
     TextView registerView;
     EditText userName, passward;
-    String s;
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
+    private static boolean mBackKeyPressed = false;
+
     int flag;
     Handler handler = new Handler() {
         @Override
@@ -104,5 +109,20 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(!mBackKeyPressed){
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            mBackKeyPressed = true;
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    mBackKeyPressed = false;
+                }
+            },2000);
+           }else{
 
+            MyApplication.getInstance().exit();
+        }
+    }
 }

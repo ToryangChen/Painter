@@ -62,6 +62,7 @@ public class HttpThread extends Thread{
             message.arg1 = Integer.parseInt(ss[0]);
             if (ss.length>1){
                 baseData.setBaseData(ss[1],ss[2]);
+                baseData.setUsername(username);
             }
             handler.sendMessage(message);
         }catch (NumberFormatException e){

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.nmid.application.MyApplication;
 import com.nmid.util.HttpThread;
 import com.nmid.util.IPAddress;
 import com.nmid.util.URLConnect;
@@ -28,6 +29,7 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acticity_splash);
+        MyApplication.getInstance().addActivity(SplashActivity.this);
         preferences = getSharedPreferences("Painter",MODE_WORLD_READABLE);
         username = preferences.getString("username", null);
         passward = preferences.getString("passward",null);

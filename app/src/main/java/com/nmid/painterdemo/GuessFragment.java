@@ -13,19 +13,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.nmid.adapter.GuessLVAdapter;
 import com.nmid.adapter.ListAdapter;
 import com.nmid.util.ApkEntity;
+import com.nmid.util.BaseData;
+import com.nmid.util.IPAddress;
 import com.nmid.util.ListData;
 import com.nmid.util.URLConnect;
 import com.nmid.util.Upload;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 //import com.nmid.painterdemo.com.nmid.GuessLVAdapter;
 
@@ -34,66 +47,86 @@ import java.util.ArrayList;
  */
 public class GuessFragment extends Fragment implements RefreshListView.IReflashListener{
 
+
+    //Handler handler = new Handler();
+    ListData listData;
     RefreshListView listView;
     GuessLVAdapter guessLVAdapter;
     ArrayList<ApkEntity> apk_list;
     View rootView;
     LayoutInflater inflater;
+    public class Handler2 extends Handler{
+        public Handler2(){}
+        public void handleMessage(Message msg) {
+            if(msg.what==1) {
+                listData = (ListData) msg.obj;
+                //System.out.println(listData.getList().size()+"= size ");
+                guessLVAdapter = new GuessLVAdapter(getActivity(), apk_list, listData);
+                listView.setAdapter(guessLVAdapter);
+            }
+            if (msg.what==2){
+                listData = (ListData) msg.obj;
+                showList(rootView,inflater);
+                listView.reflashComplete();
+            }
+        }
+
+    };
+    Handler2 handler2 =  new Handler2();
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
+        BaseData baseData= new BaseData();
+        new URLConnect(baseData.getUsername(),handler2,1).start();
         rootView = inflater.inflate(R.layout.activity_guess,container,false);
         this.inflater = inflater;
         setData();
-        showList(apk_list,rootView,inflater);
+        showList(rootView,inflater);
         return rootView;
     }
 
     private void setData() {
         apk_list = new ArrayList<ApkEntity>();
-        for (int i = 0; i < ListData.list.size(); i++) {
-            ApkEntity entity = new ApkEntity();
-            entity.setPaintJson(ListData.list.get(i));
-            entity.setName(ListData.map.get(entity.getPaintJson()));
-            apk_list.add(entity);
-        }
+//        for (int i = 0; i < listData.list.size(); i++) {
+//            ApkEntity entity = new ApkEntity();
+//            entity.setPaintJson(listData.list.get(i));
+//            entity.setName(listData.map.get(entity.getPaintJson()));
+//            apk_list.add(entity);
+//        }
+
 
     }
-    private void showList(ArrayList<ApkEntity> apk_list,View rootView,LayoutInflater inflater) {
+    private void showList(View rootView,LayoutInflater inflater) {
         if (guessLVAdapter == null) {
             listView = (RefreshListView)rootView.findViewById(R.id.guessLV);
+
             listView.setInterface(this);
-            guessLVAdapter = new GuessLVAdapter(getActivity(),apk_list);
-            listView.setAdapter(guessLVAdapter);
+
+            listView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    listView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+                    EditText editText = (EditText) view.findViewById(R.id.answerET);
+                    editText.requestFocus();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+
+                }
+            });
         } else {
-            guessLVAdapter.onDateChange(apk_list);
+            guessLVAdapter.onDateChange(listData);
         }
     }
-    private void setReflashData() {
+    private void setReflashData(String username) {
         apk_list.clear();
-        for (int i = 0; i < ListData.list.size(); i++) {
-            ApkEntity entity = new ApkEntity();
-            entity.setPaintJson(ListData.list.get(i));
-            entity.setName(ListData.map.get(entity.getPaintJson()));
-            apk_list.add(entity);
-        }
     }
 
     @Override
     public void onRelash() {
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                //获取最新数据
-                setReflashData();
-                //通知界面显示
-                showList(apk_list,rootView,inflater);
-                //通知listview 刷新数据完毕；
-                listView.reflashComplete();
-            }
-        }, 2000);
+        final BaseData baseData = new BaseData();
+        new URLConnect(baseData.getUsername(),handler2,2).start();
     }
 
 }

@@ -9,9 +9,16 @@ import java.util.Map;
  * Created by Toryang on 2015/4/28.
  */
 public class ListData {
-    public static List<String> list = new ArrayList<>();
-    public static Map<String,String> map= new HashMap<>();
-
-    public static List<String> mypainterlist = new ArrayList<>();
-    public static Map<String,String> mypaintermap= new HashMap<>();
+    private   List<String> list ;
+    private  Map<String,String> map;
+    public void setDataList(List<String> list,Map<String,String> map){
+        this.list = list;
+        this.map = map;
+    }
+    public List<String> getList(){
+        return list;
+    }
+    public Map<String,String> getMap(){
+        return map;
+    }
 }

@@ -1,7 +1,6 @@
 package com.nmid.adapter;
 
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.nmid.painterdemo.R;
 import com.nmid.util.ApkEntity;
 import com.nmid.util.IPAddress;
@@ -35,7 +33,7 @@ public class ListAdapter extends BaseAdapter{
 	}
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
+
 		return apk_list.size();
 	}
 
@@ -61,11 +59,11 @@ public class ListAdapter extends BaseAdapter{
             viewHolder.myImage = (ImageView)arg1.findViewById(R.id.image);
             viewHolder.myText = (TextView)arg1.findViewById(R.id.name);
             arg1.setTag(viewHolder);
-            Picasso.with(arg1.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
-                    + ListData.mypainterlist.get(arg0)).resize(480,800).into(viewHolder.myImage);
         }else{
             viewHolder = (ViewHolder)arg1.getTag();
         }
+        Picasso.with(arg1.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
+                + entity.getPaintJson()).resize(480,800).into(viewHolder.myImage);
         viewHolder.myText.setText(entity.getName());
 		return arg1;
 	}

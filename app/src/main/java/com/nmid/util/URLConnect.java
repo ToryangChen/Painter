@@ -4,6 +4,7 @@ package com.nmid.util;
 
 import android.app.Application;
 import android.os.Handler;
+import android.os.Message;
 
 import com.nmid.application.MyApplication;
 import com.nmid.painterdemo.GuessFragment;
@@ -26,21 +27,23 @@ import java.util.Map;
  * Created by tornado on 2015/4/22.
  */
 public class URLConnect extends Thread{
-    Handler Ghandler;
+
+    public ListData listData  =new ListData();
+    Handler handler;
+    int MsgWhat;
     private String username;
-    public URLConnect(Handler handler,String username){
-        Ghandler = handler;
+    public URLConnect(String username,Handler handler,int i){
+        MsgWhat = i;
         this.username= username;
+        this.handler = handler;
     }
     @Override
     public void run()  {
-        String[] json =null ;
+        String[] json  ;
         List<String> list = new ArrayList<>();
         Map<String,String> map= new HashMap<>();
-        List<String> mylist = new ArrayList<>();
-        Map<String,String> mymap= new HashMap<>();
         try {
-          String answerURL = IPAddress.IP+"GreatArtist/pushOther.php?username="+username;
+            String answerURL = IPAddress.IP+"GreatArtist/pushOther.php?username="+username;
             URL getURL = new URL(answerURL);
             HttpURLConnection connection = (HttpURLConnection) getURL.openConnection();
             connection.setDoInput(true);
@@ -83,66 +86,25 @@ public class URLConnect extends Thread{
         catch (JSONException e) {
             e.printStackTrace();
         }
-        synchronized (list) {
-            ListData.map = map;
-            ListData.list = list;
-        }
+
+        listData.setDataList(list,map);
+        Message message1 = new Message();
+        message1.what = MsgWhat;
+        message1.obj =  listData;
+        handler.sendMessage(message1);
 
 
-        if(MyApplication.getFlag()){
-            Ghandler.sendEmptyMessage(1);
-        }
+
+
 
         // {"answer":"pic1","url":"benbenla-04d.jpg"}
 
 
 
-        try {
-            String answerURL2 = IPAddress.IP+"GreatArtist/pushMyself.php?username="+username;
-            URL getURL2 = new URL(answerURL2);
-             HttpURLConnection connection2 = (HttpURLConnection) getURL2.openConnection();
-            connection2.setDoInput(true);
-            connection2.setDoOutput(true);
-            connection2.setUseCaches(false);
-            connection2.setRequestMethod("GET");
-            connection2.setRequestProperty("Connection", "Keep-Alive");
-            connection2.setRequestProperty("Charset", "UTF-8");
-//            connection.setRequestProperty("Content-Type", "application/json");
 
-
-            InputStream is2 = connection2.getInputStream();
-            int ch;
-            StringBuffer b = new StringBuffer();
-            while ((ch = is2.read()) != -1)
-            {
-                b.append((char) ch);
-            }
-            is2.close();
-
-
-            String str2 = b.toString().trim();
-            System.out.println(str2+"=buf");
-            json = str2.split("\\</br>");
-            for (String s : json){
-                System.out.println(s);
-                JSONObject json1= new JSONObject(s);
-                String answer = json1.getString("answer");
-                String path = json1.getString("url");
-                System.out.println(answer);
-                mymap.put(path,answer);
-                mylist.add(path);
-            }
-
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-            ListData.mypaintermap = mymap;
-            ListData.mypainterlist = mylist;
 
 
     }
+
+
 }

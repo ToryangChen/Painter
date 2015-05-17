@@ -46,7 +46,6 @@ public class SplashActivity extends Activity {
             startActivity(intent);
         } else{
             new HttpThread(IPAddress.IP + "GreatArtist/login.php",username,passward,handler).start();
-            new URLConnect(handler, username).start();
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
         }

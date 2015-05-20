@@ -35,6 +35,7 @@
             android:background="@drawable/rpassedit"
             android:paddingLeft="30dp"
             android:hint="密码"
+            android:inputType="textPassword"
             android:id="@+id/register_password"/>
 
         <EditText
@@ -42,6 +43,7 @@
             android:layout_height="50dp"
             android:background="@drawable/rgpassedit"
             android:paddingLeft="30dp"
+            android:inputType="textPassword"
             android:hint="重复密码"
             android:id="@+id/register_pwagain"/>
     </LinearLayout>

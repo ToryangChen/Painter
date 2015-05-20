@@ -43,7 +43,7 @@ public class URLConnect extends Thread{
         List<String> list = new ArrayList<>();
         Map<String,String> map= new HashMap<>();
         try {
-            String answerURL = IPAddress.IP+"GreatArtist/pushOther.php?username="+username;
+            String answerURL = IPAddress.IP+"pushOther.php?username="+username;
             URL getURL = new URL(answerURL);
             HttpURLConnection connection = (HttpURLConnection) getURL.openConnection();
             connection.setDoInput(true);
@@ -93,15 +93,7 @@ public class URLConnect extends Thread{
         message1.obj =  listData;
         handler.sendMessage(message1);
 
-
-
-
-
         // {"answer":"pic1","url":"benbenla-04d.jpg"}
-
-
-
-
 
 
     }

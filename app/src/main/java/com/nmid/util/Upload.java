@@ -40,7 +40,7 @@ public class Upload extends Thread{
         File sdCardDir = Environment.getExternalStorageDirectory();
         String path = sdCardDir.getPath()+"/大画师";
         String uploadFile =path+"/"+fileName;
-        String postUrl = IPAddress.IP+"/GreatArtist/uploading.php";
+        String postUrl = IPAddress.IP+"uploading.php";
         String end = "\r\n";
         String twoHyphens = "--";
         String boundary = "*****";

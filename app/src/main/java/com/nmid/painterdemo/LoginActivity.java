@@ -75,7 +75,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.login_button:
                 //Toast.makeText(this,"登录按钮",Toast.LENGTH_SHORT).show();
-                new HttpThread(IPAddress.IP + "GreatArtist/login.php", userName.getText().toString(),
+                new HttpThread(IPAddress.IP + "login.php", userName.getText().toString(),
                         passward.getText().toString(), handler).start();
                 //new URLConnect(handler, userName.getText().toString()).start();
 

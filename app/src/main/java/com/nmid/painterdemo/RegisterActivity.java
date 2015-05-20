@@ -76,7 +76,7 @@ public class RegisterActivity extends ActionBarActivity {
        else if(!(rPassword.getText().toString()).equals(rgPassword.getText().toString())){
            Toast.makeText(this,"密码不一致",Toast.LENGTH_SHORT).show();
        }else{
-           new HttpThread(IPAddress.IP+"GreatArtist/reg.php",rUsername.getText().toString(),
+           new HttpThread(IPAddress.IP+"reg.php",rUsername.getText().toString(),
                    rPassword.getText().toString(),handler).start();
        }
    }

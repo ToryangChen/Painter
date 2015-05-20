@@ -91,6 +91,4 @@ public class HttpThread extends Thread{
             System.out.println("e");
         }
     }
-
-
 }

@@ -96,7 +96,7 @@ public class GuessLVAdapter extends BaseAdapter {
             holder.answerET.setClickable(true);
 
         }
-        Picasso.with(convertView.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
+        Picasso.with(convertView.getContext()).load(IPAddress.IP+"loading/"
                 +listData.getList().get(position)).resize(480,800).into(holder.newImageView);
 
         holder.time.setText(listData.getMap().get(listData.getList().get(position)));

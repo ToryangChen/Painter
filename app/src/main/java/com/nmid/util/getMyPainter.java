@@ -36,7 +36,7 @@ public class getMyPainter extends Thread {
     public void run() {
 
         try {
-            String answerURL2 = IPAddress.IP + "GreatArtist/pushMyself.php?username="+username ;
+            String answerURL2 = IPAddress.IP + "pushMyself.php?username="+username ;
             URL getURL2 = new URL(answerURL2);
             HttpURLConnection connection2 = (HttpURLConnection) getURL2.openConnection();
             connection2.setDoInput(true);

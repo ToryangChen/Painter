@@ -62,7 +62,7 @@ public class ListAdapter extends BaseAdapter{
         }else{
             viewHolder = (ViewHolder)arg1.getTag();
         }
-        Picasso.with(arg1.getContext()).load(IPAddress.IP+"GreatArtist/loading/"
+        Picasso.with(arg1.getContext()).load(IPAddress.IP+"loading/"
                 + entity.getPaintJson()).resize(480,800).into(viewHolder.myImage);
         viewHolder.myText.setText(entity.getName());
 		return arg1;

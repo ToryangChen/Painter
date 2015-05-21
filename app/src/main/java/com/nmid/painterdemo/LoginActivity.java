@@ -121,7 +121,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 }
             },2000);
            }else{
-
             MyApplication.getInstance().exit();
         }
     }

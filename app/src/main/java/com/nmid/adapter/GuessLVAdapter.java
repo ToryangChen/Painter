@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.nmid.painterdemo.R;
 import com.nmid.util.AddScore;
 import com.nmid.util.ApkEntity;
+import com.nmid.util.BaseData;
 import com.nmid.util.IPAddress;
 import com.nmid.util.ListData;
 import com.nmid.util.URLConnect;
@@ -34,7 +35,9 @@ public class GuessLVAdapter extends BaseAdapter {
     int i =-1;
     List<ApkEntity> apk_list = new ArrayList<>();
     ListData listData;
+    BaseData baseData = new BaseData();
     Context context;
+    int width,height;
     LayoutInflater mInflater;
 
     public GuessLVAdapter(Context context,List<ApkEntity> apk_list,ListData listData) {
@@ -96,8 +99,13 @@ public class GuessLVAdapter extends BaseAdapter {
             holder.answerET.setClickable(true);
 
         }
+        width = baseData.getScreenWidth();
+        height = baseData.getScreenHeight();
+        System.out.println(width+" "+height);
         Picasso.with(convertView.getContext()).load(IPAddress.IP+"loading/"
-                +listData.getList().get(position)).resize(480,800).into(holder.newImageView);
+                +listData.getList().get(position))
+                .resize(width, height)
+                .into(holder.newImageView);
 
         holder.time.setText(listData.getMap().get(listData.getList().get(position)));
 

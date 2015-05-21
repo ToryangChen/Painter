@@ -15,7 +15,7 @@ public class AddProduction extends Thread {
         BaseData baseData = new BaseData();
         try {
             //http://125.81.59.144/GreatArtist/addScore.php?username=zhangsan
-            URL addScoreURL = new URL(IPAddress.IP+"GreatArtist/addProduction.php?username="+baseData.getUsername());
+            URL addScoreURL = new URL(IPAddress.IP+"addProduction.php?username="+baseData.getUsername());
             HttpURLConnection connection = (HttpURLConnection) addScoreURL.openConnection();
             connection.setDoInput(true);
             connection.setDoOutput(false);

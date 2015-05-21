@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.nmid.painterdemo.R;
 import com.nmid.util.ApkEntity;
+import com.nmid.util.BaseData;
 import com.nmid.util.IPAddress;
 import com.nmid.util.ListData;
 import com.squareup.picasso.Picasso;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 public class ListAdapter extends BaseAdapter{
 	LayoutInflater inflater;
 	ArrayList<ApkEntity> apk_list;
+    BaseData baseData = new BaseData();
 	public ListAdapter(Context context,ArrayList<ApkEntity> apk_list){
 		this.apk_list = apk_list;
 		this.inflater = LayoutInflater.from(context);
@@ -63,7 +65,9 @@ public class ListAdapter extends BaseAdapter{
             viewHolder = (ViewHolder)arg1.getTag();
         }
         Picasso.with(arg1.getContext()).load(IPAddress.IP+"loading/"
-                + entity.getPaintJson()).resize(480,800).into(viewHolder.myImage);
+                + entity.getPaintJson())
+                .resize(baseData.getScreenWidth(), baseData.getScreenWidth())
+                .into(viewHolder.myImage);
         viewHolder.myText.setText(entity.getName());
 		return arg1;
 	}

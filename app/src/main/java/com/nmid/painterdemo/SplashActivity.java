@@ -18,10 +18,12 @@ import com.nmid.util.URLConnect;
 public class SplashActivity extends Activity {
     private SharedPreferences preferences;
     private String username,passward;
+    private int flag;
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
+            flag = msg.arg1;
+            intent(flag);
         }
     };
 
@@ -46,7 +48,16 @@ public class SplashActivity extends Activity {
             startActivity(intent);
         } else{
             new HttpThread(IPAddress.IP + "login.php",username,passward,handler).start();
+
+        }
+    }
+    private void intent(int flag){
+        if (flag == 1){
             Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+        else {
+            Intent intent = new Intent(this,LoginActivity.class);
             startActivity(intent);
         }
     }

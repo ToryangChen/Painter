@@ -39,6 +39,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.nmid.util.BaseData;
 import com.nmid.util.ListData;
 import com.nmid.util.Upload;
 
@@ -58,14 +59,11 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
     private Bitmap baseBitmap;
     private Canvas canvas;
     private Paint paint = new Paint();
-    private Paint cpaint = new Paint();
-    private Paint epaint = new Paint();
     private ImageButton penButton,eraserButton,clearButton,invisibleButton;
     private Spinner colorChoice;
     private ArrayAdapter adapter;
     private View view;
     private String name;
-    Context context = null;
     int color = Color.BLACK;
     private boolean flag=false;
     final Handler handler = new Handler() {
@@ -217,7 +215,6 @@ public class PaintFragment extends Fragment implements View.OnClickListener{
         DisplayMetrics dm = getResources().getDisplayMetrics();
         System.out.println("heigth2 : " + dm.heightPixels);
         System.out.println("width2 : " + dm.widthPixels);
-
 
         int VIEW_WIDTH = dm.widthPixels;
         int VIEW_HEIGHT = dm.heightPixels - (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,105,

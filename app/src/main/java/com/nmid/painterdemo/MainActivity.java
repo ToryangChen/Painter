@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +28,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     public DrawerLayout drawerLayout;// 侧边栏布局
     public LinearLayout linearLayout,myPaintLayout,mesageLyout,logoutLayout;
-
     private TextView username,score,number,aboutus;
-
     BaseData baseData =new BaseData();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +69,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     private void initEvent(){
+        DisplayMetrics dm = getResources().getDisplayMetrics();
         System.out.println(baseData.getUsername()+baseData.getScore()+baseData.getNumber()+"111");
-
+        baseData.setSreen(dm.widthPixels,dm.heightPixels);
         username.setText(baseData.getUsername()+"");
         score.setText(baseData.getScore()+"");
         number.setText(baseData.getNumber()+"");
@@ -114,6 +115,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.menu_message:
+                MessDialog();
                 break;
             case R.id.menu_logout:
                 OperateDb();
@@ -122,8 +124,20 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         }
     }
+    private void MessDialog(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("消息");
+        builder.setMessage("你还没有新消息!");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
 
-    public void Dialog(){
+    private void Dialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         View dialoglayout = inflater.inflate(R.layout.dialog_activity, null);
